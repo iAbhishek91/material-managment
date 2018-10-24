@@ -14,3 +14,5 @@ app.get('/api/customers', (req, res) => {
 const port = 5000;
 
 app.listen(port, () => console.log(`server started at port ${port}`));
+
+// my sql database: Abhisona@123

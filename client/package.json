@@ -1,7 +1,7 @@
 {
   "name": "client",
   "version": "0.0.1",
-  "description": "UI of matirial management",
+  "description": "UI of material management",
   "main": "index.js",
   "author": "abhishek das",
   "scripts": {
