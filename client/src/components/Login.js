@@ -1,34 +1,58 @@
-import React, { Component } from 'react';
-import ReactDom from 'react-dom';
+import React, { PureComponent } from 'react';
+import { CustomerContext } from './FetchData';
+import { BrowserRouter, Route, Redirect } from 'react-router-dom';
+import MaterialMaster from './pages/MaterialMaster';
 
-class Login extends Component {
-  constructor() {
-    super();
-    this.state = {
-      customers: []
-    };
+export default class Login extends PureComponent {
+  state = {
+    username: '',
+    password: '',
   }
 
-  componentDidMount() {
-    // this is possible as
-    //proxy is configured in package.json
-    fetch('/api/customers')
-      .then(data => data.json())
-      .then(customers =>
-        this.setState({ customers }, () =>
-          console.log('customers fetched', customers)
-        )
-      );
+  onClickHandler = ( customers ) => {
+    const isAuthorized = customers.map(
+      customer => (
+        customer.firstName === this.state.username
+        && customer.lastName === this.state.password
+      )
+    ).indexOf(true);
+    console.log(isAuthorized);
+    this.setState({ isAuthorized });
   }
 
-  render() {
+  componentDidMount(){
+    console.log('<Login /> componentDidMount');
+  }
+
+  render(){
     return (
-      <div>
-        <h1>Login</h1>
-        <p />
+      <div id="loginForm" className="container">
+        <input
+          className="form-element"
+          type="text"
+          placeholder="please enter Username!"
+          onChange={(e)=>{this.setState({username: e.target.value})}}
+        />
+        <input
+          className="form-element"
+          type="text"
+          placeholder="please enter Password!"
+          onChange={(e)=>{this.setState({password: e.target.value})}}
+        />
+        <CustomerContext.Consumer>
+          {
+            (context) => (
+              <input
+                type="submit"
+                className="form-element button"
+                onClick={this.onClickHandler.bind(this, context.state.customers)}
+                value="Login"
+              />
+            )
+          }
+        </CustomerContext.Consumer>
+        
       </div>
-    );
+    )
   }
 }
-
-export default Login;

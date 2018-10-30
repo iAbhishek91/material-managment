@@ -1,5 +1,33 @@
-li.list-style-none {
-  list-style-type: none;
+
+body {
+  background-color: #f2f2f2
+}
+
+#header {
+  display: grid;
+  grid-template-columns: 70px auto 50px;
+  background-color:#0d0d0d;
+  color: #666666;
+  opacity: 0.9;
+  height: 75px;
+  border-radius: 5px;
+  font-family: 'georgia';
+}
+
+#footer {
+  display: grid;
+  grid-template-columns: 70px auto 50px;
+  background-color:#0d0d0d;
+  color: #666666;
+  opacity: 0.9;
+  height: 75px;
+  border-radius: 5px;
+  font-family: 'georgia';
+}
+
+img {
+  display: block;
+  margin: auto;
 }
 
 button {
@@ -29,18 +57,40 @@ button {
   padding: 15px 32px;
   text-align: right;
 }
-button.number {
-  background-color: white;
+
+.cls-center {
+  text-align: center;
 }
 
-button.equalTo {
-  background-color: green;
+.container {
+  padding: 15px;
+  margin-right: auto;
+  margin-left: auto;
 }
 
-button.operation {
-  background-color: greenyellow;
+#loginForm {
+  position: right;
+  margin-top: 10px;
+  float: right;
+  width: auto;
+  height: auto;
 }
 
-button.clear {
-  background-color: orangered;
+.form-element {
+  height: 30px;
+  margin-right: 6px;
+  padding: 5px 10px;
+  border-radius: 3px;
 }
+
+.textbox {
+  line-height: 1.6;
+}
+
+.button {
+  background-color: #0073e6;
+  color:white;
+  text-align: center;
+}
+
+
