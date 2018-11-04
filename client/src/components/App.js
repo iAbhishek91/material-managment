@@ -19,13 +19,13 @@ class App extends Component {
     return (
       <Context>
         <BrowserRouter>
-          <Fragment>
-            <Header
-              isLoginHandler={this.toggleLoginVisibilityHandler}
+          <>
+            <Header/>
+            <Pages
               isLogin={this.state.isLogInFormVisible}
+              toggleLoginFormHandler={this.toggleLoginVisibilityHandler}
             />
-            <Pages disableLogin={this.toggleLoginVisibilityHandler}/>
-          </Fragment>
+          </>
         </BrowserRouter>
       </Context>
     );

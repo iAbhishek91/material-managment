@@ -1,20 +1,25 @@
 import React, { Component } from 'react';
 import { Switch, Route, Redirect} from 'react-router-dom';
 import { CustomerContext } from './FetchData';
-import MaterialMaster from './pages/MaterialMaster';
+import MaterialMaster from './pages/MaterialMaster/';
 import NotFound from './NotFound';
-import Welcome from './Welcome';
+import Welcome from './pages/Welcome/';
 
 export default class Pages extends Component {
   render(){
-    const { disableLogin } = this.props;
+    const { isLogin, toggleLoginFormHandler } = this.props;
     const { state: {isAuthorized} } = this.context;
     return (
         <Switch>
-          <Route exact path="/" component={Welcome}/>
+          <Route exact path="/" render={() => (
+            <Welcome
+              isLoginHandler={toggleLoginFormHandler}
+              isLogin={isLogin}
+            />)}
+          />
           <Route path="/materialMaster" render={() => (
             isAuthorized
-              ? <MaterialMaster disableLogin={disableLogin}/>
+              ? <MaterialMaster disableLogin={toggleLoginFormHandler}/>
               : <Redirect to="/" />
           )}/>
           <Route component={NotFound} />

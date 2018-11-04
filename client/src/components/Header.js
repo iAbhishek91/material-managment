@@ -1,48 +1,29 @@
-import React, { Fragment } from 'react';
-import Login from './Login';
+import React from 'react';
 import { CustomerContext } from './FetchData';
 
-export default class Header extends React.PureComponent{
-  clickHandler = (action, setState, isLoginHandler) => {
-    if(action === 'Signout') setState({ isAuthorized : false });
-    isLoginHandler();
-  }
-
-  componentDidMount() {
-    console.log('<Header /> componentDidMount');
+export default class Header extends React.Component{
+  signOffHandler = (setState) => {
+    setState({ isAuthorized : undefined });
   }
 
   render() {
-    const { isLogin, isLoginHandler } = this.props;
-    const { state:{isAuthorized}, setState } = this.context;
-    const userAction = isAuthorized === true ? 'Signout' : 'Login';
+    const { state: {isAuthorized}, setState } = this.context;
     return (
-      <Fragment>
+      <div className="page-header">
         <div id="header">
           <img
             src="../../resources/images/clientLogo.png"
             height="50px"
             width="50px"
-          >
+            className="box-1"
+            >
           </img>
-          <h1 className="cls-center">
+          <h1 className="cls-center box-1" id="heading-text">
             Material Management
           </h1>
-          <p onClick={this.clickHandler.bind(
-            this,
-            userAction,
-            setState,
-            isLoginHandler,
-          )}>
-            {userAction}
-          </p>
+          <p onClick={this.signOffHandler.bind(this, setState)}>{isAuthorized && 'Sign out'}</p>
         </div>
-        {
-          isLogin && (
-            <Login />
-          )
-        }
-      </Fragment>
+      </div>
     );
   };
 };

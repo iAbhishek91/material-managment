@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react';
-import { CustomerContext } from './FetchData';
 import { Redirect } from 'react-router-dom';
+import { CustomerContext } from '../../FetchData';
+import ValidationError from '../../ValidationError';
 
 export default class Login extends PureComponent {
   state = {
@@ -19,7 +20,7 @@ export default class Login extends PureComponent {
         customer.firstName === this.state.username
         && customer.lastName === this.state.password
       )
-    ).indexOf(true) === 0;
+    ).indexOf(true) >= 0;
    
     console.log(isAuthorized);
     setState({isAuthorized});
@@ -32,7 +33,8 @@ export default class Login extends PureComponent {
   render(){
     const context = this.context;
     return (
-      <div id="loginForm" className="container">
+      <div id="loginForm">
+        {context.state.isAuthorized === false && <ValidationError label='Invalid credential' />}
         <input
           className="form-element"
           type="text"
@@ -51,11 +53,7 @@ export default class Login extends PureComponent {
           onClick={this.onClickHandler.bind(this, context)}
           value="Login"
         />
-        {
-          context.state.isAuthorized && (
-            <Redirect to="/materialMaster" />
-          )
-        }
+        {context.state.isAuthorized && <Redirect to="/materialMaster" />}
       </div>
     )
   }

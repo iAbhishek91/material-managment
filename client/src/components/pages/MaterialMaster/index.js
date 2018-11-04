@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, Fragment } from 'react';
 
 export default class MaterialManagment extends PureComponent {
   componentDidMount(){
@@ -11,7 +11,9 @@ export default class MaterialManagment extends PureComponent {
   
   render(){
     return (
-      <h1>Material Master</h1>
+      <div className="page">
+        <h1>Material Master</h1>
+      </div>
     )
   }
 };
