@@ -5,7 +5,7 @@ body {
 
 #header {
   display: grid;
-  grid-template-columns: 70px auto 50px;
+  grid-template-columns: 70px auto 60px;
   background-color:#0d0d0d;
   color: #666666;
   opacity: 0.9;

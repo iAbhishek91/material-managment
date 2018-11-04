@@ -30,8 +30,11 @@ module.exports = {
     })
   ],
   devServer: {
+    // in fetch we dont have to mention the entire server url
     proxy: {
       '/api': 'http://localhost:5000'
-    }
+    },
+    // to make react-router work
+    historyApiFallback: true,
   }
 };

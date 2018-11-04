@@ -1,17 +1,11 @@
 import React, { Fragment } from 'react';
-import ReactDom from 'react-dom';
-import * as style from '../style.css';
 import Login from './Login';
+import { CustomerContext } from './FetchData';
 
 export default class Header extends React.PureComponent{
-  state = {
-    isLogInFormVisible : false,
-  }
-
-  clickHandler = () => {
-    this.setState({
-      isLogInFormVisible: !this.state.isLogInFormVisible,
-    });
+  clickHandler = (action, setState, isLoginHandler) => {
+    if(action === 'Signout') setState({ isAuthorized : false });
+    isLoginHandler();
   }
 
   componentDidMount() {
@@ -19,6 +13,9 @@ export default class Header extends React.PureComponent{
   }
 
   render() {
+    const { isLogin, isLoginHandler } = this.props;
+    const { state:{isAuthorized}, setState } = this.context;
+    const userAction = isAuthorized === true ? 'Signout' : 'Login';
     return (
       <Fragment>
         <div id="header">
@@ -31,12 +28,17 @@ export default class Header extends React.PureComponent{
           <h1 className="cls-center">
             Material Management
           </h1>
-          <p onClick={this.clickHandler}>
-            Login
+          <p onClick={this.clickHandler.bind(
+            this,
+            userAction,
+            setState,
+            isLoginHandler,
+          )}>
+            {userAction}
           </p>
         </div>
         {
-          this.state.isLogInFormVisible && (
+          isLogin && (
             <Login />
           )
         }
@@ -44,3 +46,5 @@ export default class Header extends React.PureComponent{
     );
   };
 };
+
+Header.contextType = CustomerContext;

@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react';
 import { CustomerContext } from './FetchData';
-import { BrowserRouter, Route, Redirect } from 'react-router-dom';
-import MaterialMaster from './pages/MaterialMaster';
+import { Redirect } from 'react-router-dom';
 
 export default class Login extends PureComponent {
   state = {
@@ -9,15 +8,21 @@ export default class Login extends PureComponent {
     password: '',
   }
 
-  onClickHandler = ( customers ) => {
+  onClickHandler = ( data ) => {
+    const {
+      state: { customers },
+      setState,
+    } = data;
+   
     const isAuthorized = customers.map(
       customer => (
         customer.firstName === this.state.username
         && customer.lastName === this.state.password
       )
-    ).indexOf(true);
+    ).indexOf(true) === 0;
+   
     console.log(isAuthorized);
-    this.setState({ isAuthorized });
+    setState({isAuthorized});
   }
 
   componentDidMount(){
@@ -25,6 +30,7 @@ export default class Login extends PureComponent {
   }
 
   render(){
+    const context = this.context;
     return (
       <div id="loginForm" className="container">
         <input
@@ -39,20 +45,21 @@ export default class Login extends PureComponent {
           placeholder="please enter Password!"
           onChange={(e)=>{this.setState({password: e.target.value})}}
         />
-        <CustomerContext.Consumer>
-          {
-            (context) => (
-              <input
-                type="submit"
-                className="form-element button"
-                onClick={this.onClickHandler.bind(this, context.state.customers)}
-                value="Login"
-              />
-            )
-          }
-        </CustomerContext.Consumer>
-        
+        <input
+          type="submit"
+          className="form-element button"
+          onClick={this.onClickHandler.bind(this, context)}
+          value="Login"
+        />
+        {
+          context.state.isAuthorized && (
+            <Redirect to="/materialMaster" />
+          )
+        }
       </div>
     )
   }
 }
+
+// subscribing to context
+Login.contextType = CustomerContext;
